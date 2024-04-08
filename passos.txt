@@ -1,0 +1,8 @@
+1- Criando projeto
+dotnet new mvc -o RibahFlix
+
+2- Criando Solução
+dotnet new sln --name RibahFlix
+
+3-Incluir Solução ao projeto
+dotnet sln add RibahFlix\RibahFlix.csproj

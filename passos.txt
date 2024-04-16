@@ -6,3 +6,22 @@ dotnet new sln --name RibahFlix
 
 3-Incluir Solução ao projeto
 dotnet sln add RibahFlix\RibahFlix.csproj
+
+Abrir o NugetGalery (shift + ctrl + p):
+    -pesquisar e instalar
+        EntityFrameworkCore
+        EntityFrameworkCore.Design
+        EntityFrameworkCore.Tools
+        Pomelo.EntityFrameworkCore.MySql
+
+Criar as classes de dados - Pasta Models
+Criar a pasta Data e a classe AppDbContext
+Criar a ConnectionString no arquivo appsettings.json
+Criar o servico de conexão no arquivo Program.csproj
+
+
+    dotnet tool install -g dotnet-aspnet-codgenerator --version 8.0.1
+
+Criar um controller CRUD - CREATE READ UPDATE DELETE
+
+dotnet-aspnet-codegenerator controller -name GenresController -m Genre -dc AppDbContext --outDir Controllers -udl

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using RibahFlix.Data;
 using RibahFlix.Models;
 
 namespace RibahFlix.Controllers;
@@ -7,15 +8,18 @@ namespace RibahFlix.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly AppDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, AppDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
     public IActionResult Index()
     {
-        return View();
+        List<Movie> movies = _context.Movies.ToList();
+        return View(movies);
     }
 
     public IActionResult Privacy()

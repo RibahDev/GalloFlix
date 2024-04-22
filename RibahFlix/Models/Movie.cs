@@ -8,7 +8,7 @@ public class Movie
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public uint Id { get; set; }
 
     [Display(Name = "Título Original")]
     [Required(ErrorMessage ="Por favor, informe o Título Original")]
@@ -27,7 +27,7 @@ public class Movie
     [Column(TypeName = "Year")]
     [Display(Name = "Ano de Estreia")]
     [StringLength(8000, ErrorMessage = "O resumo deve possuir no máximo 8000  caracteres")]
-    public string MyProperty { get; set; }
+    public Int16 MovieYear { get; set; }
 
     [Display(Name = "Duração (em minutos)")]
     [Required(ErrorMessage = "Por favor, informe a Duração")]

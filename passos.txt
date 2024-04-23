@@ -20,8 +20,10 @@ Criar a ConnectionString no arquivo appsettings.json
 Criar o servico de conexão no arquivo Program.csproj
 
 
-    dotnet tool install -g dotnet-aspnet-codgenerator --version 8.0.1
+    dotnet tool install -g dotnet-aspnet-codegenerator --version 8.0.1
 
 Criar um controller CRUD - CREATE READ UPDATE DELETE
 
 dotnet-aspnet-codegenerator controller -name GenresController -m Genre -dc AppDbContext --outDir Controllers -udl
+
+dotnet-aspnet-codegenerator controller -name MoviesController -m Movie -dc AppDbContext --outDir Controllers -udl

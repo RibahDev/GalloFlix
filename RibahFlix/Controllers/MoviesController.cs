@@ -66,7 +66,7 @@ namespace RibahFlix.Controllers
                 if (arquivo != null)
                 {
                     string nomeArquivo = movie.Id + Path.GetExtension(arquivo.FileName);
-                    string caminho = Path.Combine(_host.WebRootPath, "img\\movies");
+                    string caminho = Path.Combine(_host.WebRootPath, "img/movies");
                     string novoArquivo = Path.Combine(caminho, nomeArquivo);
                     using (var stream = new FileStream(novoArquivo, FileMode.Create))
                     {

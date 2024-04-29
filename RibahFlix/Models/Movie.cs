@@ -26,7 +26,6 @@ public class Movie
     
     [Column(TypeName = "Year")]
     [Display(Name = "Ano de Estreia")]
-    [StringLength(8000, ErrorMessage = "O resumo deve possuir no máximo 8000  caracteres")]
     public Int16 MovieYear { get; set; }
 
     [Display(Name = "Duração (em minutos)")]
@@ -44,7 +43,7 @@ public class Movie
     [NotMapped]
     [Display(Name = "Duração")]
     public string HourDuration { get {
-        return TimeSpan.FromMinutes(Duration).ToString(@"%h'h 'mm'min.");
+        return TimeSpan.FromMinutes(Duration).ToString(@"%h'h 'mm'min.'");
     } }
 
     public ICollection<MovieGenre>  Genres { get; set; }

@@ -13,10 +13,12 @@ namespace RibahFlix.Controllers
     public class MoviesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _host;
 
-        public MoviesController(AppDbContext context)
+        public MoviesController(AppDbContext context, IWebHostEnvironment host)
         {
             _context = context;
+            _host = host;
         }
 
         // GET: Movies
@@ -54,12 +56,26 @@ namespace RibahFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OriginalTitle,Title,Synopsis,MovieYear,Duration,AgeRating,Image")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,OriginalTitle,Title,Synopsis,MovieYear,Duration,AgeRating,Image")] Movie movie, IFormFile arquivo)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
+
+                if (arquivo != null)
+                {
+                    string nomeArquivo = movie.Id + Path.GetExtension(arquivo.FileName);
+                    string caminho = Path.Combine(_host.WebRootPath, "img\\movies");
+                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
+                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                    {
+                        arquivo.CopyTo(stream);
+                    }
+                    movie.Image = "\\img\\movies\\" + nomeArquivo;
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(movie);
@@ -86,7 +102,7 @@ namespace RibahFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,OriginalTitle,Title,Synopsis,MovieYear,Duration,AgeRating,Image")] Movie movie)
+        public async Task<IActionResult> Edit(uint id, [Bind("Id,OriginalTitle,Title,Synopsis,MovieYear,Duration,AgeRating,Image")] Movie movie, IFormFile arquivo)
         {
             if (id != movie.Id)
             {
@@ -97,8 +113,20 @@ namespace RibahFlix.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
+                      if (arquivo != null)
+                {
+                    string nomeArquivo = movie.Id + Path.GetExtension(arquivo.FileName);
+                    string caminho = Path.Combine(_host.WebRootPath, "img\\movies");
+                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
+                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                    {
+                        arquivo.CopyTo(stream);
+                    }
+                    movie.Image = "\\img\\movies\\" + nomeArquivo;
                     await _context.SaveChangesAsync();
+                }
+                
+                    _context.Update(movie);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

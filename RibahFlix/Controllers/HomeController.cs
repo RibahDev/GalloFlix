@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using RibahFlix.Data;
 using RibahFlix.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RibahFlix.Controllers;
 
@@ -18,7 +19,10 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        List<Movie> movies = _context.Movies.ToList();
+        List<Movie> movies = _context.Movies
+            .Include(m => m.Genres)
+            .ThenInclude(mv => mv.Genre)
+            .ToList();
         return View(movies);
     }
 

@@ -34,6 +34,16 @@ namespace RibahFlix.Controllers;
             return View(loginVM);
         }
 
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            RegisterVM registerVM = new()
+            {
+            };
+            return View(registerVM);
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]        
         public async Task<IActionResult> login(LoginVM login)
